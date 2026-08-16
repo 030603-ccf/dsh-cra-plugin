@@ -16,7 +16,7 @@ classifiers = [
     "Topic :: Software Development :: Quality Assurance",
 ]
 dependencies = [
-    "lra>=2.1.0",
+    "lra-code-review>=2.1.0",
     "pyyaml>=6.0",
 ]
 

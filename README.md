@@ -24,7 +24,7 @@ pip install lra-mcp
 lra-mcp
 ```
 
-`lra` is a dependency and is installed automatically from PyPI.
+`lra-code-review` is a dependency and is installed automatically from PyPI.
 
 ## Docker
 

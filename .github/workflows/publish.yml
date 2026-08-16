@@ -20,8 +20,8 @@ jobs:
           python-version: "3.11"
           cache: pip
 
-      - name: Install lra from PyPI
-        run: pip install "lra>=2.1.0"
+      - name: Install lra-code-review from PyPI
+        run: pip install "lra-code-review>=2.1.0"
 
       - name: Install lra-mcp
         run: pip install -e ".[dev]"

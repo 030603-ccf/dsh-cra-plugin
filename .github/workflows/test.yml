@@ -18,8 +18,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
 
-      - name: Install lra from GitHub
-        run: pip install "lra @ git+https://github.com/030603-ccf/code-review-agent.git"
+      - name: Install lra-code-review from GitHub
+        run: pip install "lra-code-review @ git+https://github.com/030603-ccf/code-review-agent.git"
 
       - name: Install lra-mcp
         run: pip install -e ".[dev]"
