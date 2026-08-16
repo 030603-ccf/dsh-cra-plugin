@@ -1,4 +1,4 @@
-"""Error model for lra-mcp.
+"""Error model for lra-code-review-mcp.
 
 Every business error is an :class:`LraMcpError` carrying a stable machine
 readable ``code``. The FastMCP layer turns it into an isError result whose

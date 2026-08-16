@@ -1,7 +1,7 @@
 [project]
-name = "lra-mcp"
+name = "lra-code-review-mcp"
 version = "0.1.0"
-description = "MCP server exposing the lra code review agent as read-only tools"
+description = "MCP server exposing the lra-code-review code review agent as read-only tools"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.11"
@@ -25,10 +25,11 @@ dev = ["pytest>=8.0"]
 
 [project.scripts]
 lra-mcp = "lra_mcp.server:main"
+lra-code-review-mcp = "lra_mcp.server:main"
 
 [project.urls]
-Homepage = "https://github.com/030603-ccf/lra-mcp"
-Repository = "https://github.com/030603-ccf/lra-mcp"
+Homepage = "https://github.com/030603-ccf/dsh-cra-plugin"
+Repository = "https://github.com/030603-ccf/dsh-cra-plugin"
 
 [build-system]
 requires = ["setuptools>=68"]

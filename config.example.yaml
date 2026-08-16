@@ -2,7 +2,7 @@
 # Same format lra (the code review agent) reads.
 #
 # API key rule: name your key's env var with `api_key_env`, then set that env
-# var. Never inline the key here — lra-mcp rejects inline keys unless
+# var. Never inline the key here — lra-code-review-mcp rejects inline keys unless
 # LRA_MCP_ALLOW_INLINE_KEY=1.
 
 default_profile: deepseek
@@ -27,6 +27,6 @@ profiles:
     max_tokens: 4096
     timeout: 60
 
-# lra-mcp requires LSP off
+# lra-code-review-mcp requires LSP off
 lsp:
   enabled: false

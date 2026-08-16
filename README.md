@@ -1,6 +1,6 @@
-# lra-mcp
+# lra-code-review-mcp
 
-MCP server for [lra](https://github.com/030603-ccf/code-review-agent) — a LangGraph-based code review agent. It wraps lra as read-only tools so any MCP client (Claude Desktop, Cursor, Windsurf, …) can review code through an LLM.
+MCP server for [lra-code-review](https://github.com/030603-ccf/code-review-agent) — a LangGraph-based code review agent. It wraps lra-code-review as read-only tools so any MCP client (Claude Desktop, Cursor, Windsurf, …) can review code through an LLM.
 
 Exposes 4 read-only tools over stdio:
 
@@ -17,11 +17,11 @@ Requires Python 3.11+.
 
 ```bash
 # run on demand
-uvx lra-mcp
+uvx lra-code-review-mcp
 
 # or install
-pip install lra-mcp
-lra-mcp
+pip install lra-code-review-mcp
+lra-code-review-mcp
 ```
 
 `lra-code-review` is a dependency and is installed automatically from PyPI.
@@ -36,7 +36,7 @@ docker run -i --rm \
   -e LRA_MCP_CONFIG=/config.yaml \
   -e LRA_MCP_PROFILE=deepseek \
   -e DEEPSEEK_API_KEY="$DEEPSEEK_API_KEY" \
-  ghcr.io/030603-ccf/lra-mcp
+  ghcr.io/030603-ccf/dsh-cra-plugin
 ```
 
 - `-i` keeps stdio open — the MCP transport rides stdin/stdout.
@@ -51,7 +51,7 @@ The server reads everything from environment variables; tool parameters never ca
 | --- | --- | --- |
 | `LRA_MCP_CONFIG` | yes | path to a `config.yaml` — copy this repo's `config.example.yaml` and fill in your profile |
 | `LRA_MCP_PROFILE` | no | profile name inside that config (default: its `default_profile`) |
-| `LRA_MCP_RUNS_DIR` | no | where review runs are stored (default: `~/.lra-mcp/runs`) |
+| `LRA_MCP_RUNS_DIR` | no | where review runs are stored (default: `~/.lra-code-review-mcp/runs`) |
 
 ### API key
 
@@ -83,7 +83,7 @@ Point any MCP client at the stdio server:
   "mcpServers": {
     "lra": {
       "command": "uvx",
-      "args": ["lra-mcp"],
+      "args": ["lra-code-review-mcp"],
       "env": {
         "LRA_MCP_CONFIG": "/absolute/path/to/lra/config.yaml",
         "LRA_MCP_PROFILE": "deepseek",
@@ -107,9 +107,9 @@ Tools surface under the `mcp__lra__*` namespace (e.g. `mcp__lra__review_project`
 git clone https://github.com/030603-ccf/code-review-agent
 cd code-review-agent && pip install -e .
 
-# 2. install lra-mcp (editable + dev)
-git clone https://github.com/030603-ccf/lra-mcp
-cd lra-mcp && pip install -e ".[dev]"
+# 2. install lra-code-review-mcp (editable + dev)
+git clone https://github.com/030603-ccf/dsh-cra-plugin
+cd dsh-cra-plugin && pip install -e ".[dev]"
 
 # 3. test
 pytest tests -q

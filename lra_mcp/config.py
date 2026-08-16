@@ -1,4 +1,4 @@
-"""Configuration loading for lra-mcp.
+"""Configuration loading for lra-code-review-mcp.
 
 All values come from environment variables; tool parameters never carry keys.
 """
@@ -47,7 +47,7 @@ def _candidate_config_paths() -> list[Path]:
         return [Path(env)]
     return [
         Path.cwd() / "config.yaml",
-        Path.home() / ".config" / "lra-mcp" / "config.yaml",
+        Path.home() / ".config" / "lra-code-review-mcp" / "config.yaml",
     ]
 
 
@@ -125,7 +125,7 @@ def load_config() -> McpConfig:
     if lsp_cfg.get("enabled"):
         raise LraMcpError("LSP_UNSUPPORTED", "MCP 模式要求 lsp.enabled=false")
 
-    runs_dir = Path(_env("LRA_MCP_RUNS_DIR") or str(Path.home() / ".lra-mcp" / "runs"))
+    runs_dir = Path(_env("LRA_MCP_RUNS_DIR") or str(Path.home() / ".lra-code-review-mcp" / "runs"))
     concurrency = int(_env("LRA_MCP_CONCURRENCY") or (cfg.get("review") or {}).get("concurrency") or 16)
     total_timeout = float(_env("LRA_MCP_TOTAL_TIMEOUT") or "1800")
     startup_timeout = float(_env("LRA_MCP_STARTUP_TIMEOUT") or "30")
