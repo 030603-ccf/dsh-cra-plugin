@@ -1,0 +1,28 @@
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install lra from GitHub
+        run: pip install "lra @ git+https://github.com/030603-ccf/code-review-agent.git"
+
+      - name: Install lra-mcp
+        run: pip install -e ".[dev]"
+
+      - name: Run tests
+        run: pytest tests -q

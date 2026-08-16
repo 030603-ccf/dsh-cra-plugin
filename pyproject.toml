@@ -1,0 +1,42 @@
+[project]
+name = "lra-mcp"
+version = "0.1.0"
+description = "MCP server exposing the lra code review agent as read-only tools"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.11"
+keywords = ["mcp", "code-review", "langgraph", "lra", "stdio"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = [
+    "lra>=2.1.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+lra-mcp = "lra_mcp.server:main"
+
+[project.urls]
+Homepage = "https://github.com/030603-ccf/lra-mcp"
+Repository = "https://github.com/030603-ccf/lra-mcp"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["lra_mcp*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
