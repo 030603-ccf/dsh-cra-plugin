@@ -23,7 +23,7 @@ jobs:
       - name: Install lra-code-review from PyPI
         run: pip install "lra-code-review>=2.1.0"
 
-      - name: Install lra-mcp
+      - name: Install lra-code-review-mcp
         run: pip install -e ".[dev]"
 
       - name: Run tests

@@ -21,7 +21,7 @@ jobs:
       - name: Install lra-code-review from GitHub
         run: pip install "lra-code-review @ git+https://github.com/030603-ccf/code-review-agent.git"
 
-      - name: Install lra-mcp
+      - name: Install lra-code-review-mcp
         run: pip install -e ".[dev]"
 
       - name: Run tests
