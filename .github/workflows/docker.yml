@@ -1,9 +1,10 @@
 name: docker
 
 on:
-  push:
-    tags:
-      - "v*"
+  # 等 publish 工作流跑完再构建镜像，避免「镜像构建时 PyPI 包还没上线」的竞态
+  workflow_run:
+    workflows: ["publish"]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -12,6 +13,8 @@ permissions:
 
 jobs:
   build-and-push:
+    # 手动触发直接跑；被 publish 触发时只在 publish 成功后跑
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,4 +33,3 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.ref_name }}
