@@ -1,0 +1,32 @@
+# Copy this file to `config.yaml` and point `LRA_MCP_CONFIG` at it.
+# Same format lra (the code review agent) reads.
+#
+# API key rule: name your key's env var with `api_key_env`, then set that env
+# var. Never inline the key here — lra-mcp rejects inline keys unless
+# LRA_MCP_ALLOW_INLINE_KEY=1.
+
+default_profile: deepseek
+
+profiles:
+  # DeepSeek official
+  deepseek:
+    base_url: "https://api.deepseek.com"
+    api_key_env: "DEEPSEEK_API_KEY"   # <- set DEEPSEEK_API_KEY=sk-... in your env
+    model: "deepseek-chat"
+    temperature: 0.2
+    max_tokens: 4096
+    timeout: 60
+    rpm: 60
+
+  # Any OpenAI-compatible endpoint (OpenAI / Qwen / GLM / vLLM / Ollama …)
+  openai_compatible:
+    base_url: "https://api.openai.com/v1"
+    api_key_env: "OPENAI_API_KEY"
+    model: "gpt-4o-mini"
+    temperature: 0.2
+    max_tokens: 4096
+    timeout: 60
+
+# lra-mcp requires LSP off
+lsp:
+  enabled: false

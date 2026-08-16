@@ -49,16 +49,30 @@ The server reads everything from environment variables; tool parameters never ca
 
 | Variable | Required | Description |
 | --- | --- | --- |
-| `LRA_MCP_CONFIG` | yes | path to an lra `config.yaml` (copy lra's `config.example.yaml` and fill in your own profile) |
+| `LRA_MCP_CONFIG` | yes | path to a `config.yaml` — copy this repo's `config.example.yaml` and fill in your profile |
 | `LRA_MCP_PROFILE` | no | profile name inside that config (default: its `default_profile`) |
 | `LRA_MCP_RUNS_DIR` | no | where review runs are stored (default: `~/.lra-mcp/runs`) |
 
-Config requirements (inherited from lra):
+### API key
 
-- `api_key` must come from `api_key_env` (an environment variable), not inline in the file.
+Your key lives in an environment variable; `api_key_env` in the config names it:
+
+```yaml
+profiles:
+  deepseek:
+    api_key_env: "DEEPSEEK_API_KEY"
+```
+
+Set that variable one of three ways:
+
+1. **Shell** (CLI): `export DEEPSEEK_API_KEY=sk-...`
+2. **MCP client `env` block** (Claude Desktop / Cursor): add `"DEEPSEEK_API_KEY": "sk-..."` to the server's `env`.
+3. **Docker**: `docker run -i --rm ... -e DEEPSEEK_API_KEY="$DEEPSEEK_API_KEY" ...`
+
+Requirements (inherited from lra):
+
+- `api_key` must come from `api_key_env`, not inline in the file.
 - `lsp.enabled` must be `false`.
-
-Put your API key in the env var named by your config's `api_key_env` (e.g. `DEEPSEEK_API_KEY`).
 
 ## MCP client config
 
