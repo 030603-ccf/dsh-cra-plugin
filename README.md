@@ -26,6 +26,23 @@ lra-mcp
 
 `lra` is a dependency and is installed automatically from PyPI.
 
+## Docker
+
+A container image is published to GHCR on every tag, so you can run it without installing Python:
+
+```bash
+docker run -i --rm \
+  -v /absolute/path/to/lra/config.yaml:/config.yaml \
+  -e LRA_MCP_CONFIG=/config.yaml \
+  -e LRA_MCP_PROFILE=deepseek \
+  -e DEEPSEEK_API_KEY="$DEEPSEEK_API_KEY" \
+  ghcr.io/030603-ccf/lra-mcp
+```
+
+- `-i` keeps stdio open — the MCP transport rides stdin/stdout.
+- Mount your lra `config.yaml` and point `LRA_MCP_CONFIG` at `/config.yaml`.
+- Pass the API key via `-e` (or `--env-file`); never bake it into the image.
+
 ## Configure
 
 The server reads everything from environment variables; tool parameters never carry API keys.
