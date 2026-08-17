@@ -21,13 +21,28 @@ def _env(name: str, default: str | None = None) -> str | None:
     return value.strip()
 
 
+def _as_int(name: str, raw: object) -> int:
+    """Parse an env/config value as int; raise CONFIG_MISSING on garbage."""
+    try:
+        return int(raw)
+    except (TypeError, ValueError):
+        raise LraMcpError("CONFIG_MISSING", f"{name} 不是合法整数: {raw!r}", env=name)
+
+
+def _as_float(name: str, raw: object) -> float:
+    """Parse an env/config value as float; raise CONFIG_MISSING on garbage."""
+    try:
+        return float(raw)
+    except (TypeError, ValueError):
+        raise LraMcpError("CONFIG_MISSING", f"{name} 不是合法数字: {raw!r}", env=name)
+
+
 @dataclass(frozen=True)
 class McpConfig:
     lra_config_path: Path
     lra_profile: str
     runs_dir: Path
     concurrency: int
-    startup_timeout: float
     total_timeout: float
     max_files: int
     max_file_bytes: int
@@ -126,20 +141,18 @@ def load_config() -> McpConfig:
         raise LraMcpError("LSP_UNSUPPORTED", "MCP 模式要求 lsp.enabled=false")
 
     runs_dir = Path(_env("LRA_MCP_RUNS_DIR") or str(Path.home() / ".lra-code-review-mcp" / "runs"))
-    concurrency = int(_env("LRA_MCP_CONCURRENCY") or (cfg.get("review") or {}).get("concurrency") or 16)
-    total_timeout = float(_env("LRA_MCP_TOTAL_TIMEOUT") or "1800")
-    startup_timeout = float(_env("LRA_MCP_STARTUP_TIMEOUT") or "30")
+    concurrency = _as_int("LRA_MCP_CONCURRENCY", _env("LRA_MCP_CONCURRENCY") or (cfg.get("review") or {}).get("concurrency") or 16)
+    total_timeout = _as_float("LRA_MCP_TOTAL_TIMEOUT", _env("LRA_MCP_TOTAL_TIMEOUT") or 1800.0)
 
     return McpConfig(
         lra_config_path=path,
         lra_profile=profile_name,
         runs_dir=runs_dir,
         concurrency=concurrency,
-        startup_timeout=startup_timeout,
         total_timeout=total_timeout,
-        max_files=int(_env("LRA_MCP_MAX_FILES") or "5000"),
-        max_file_bytes=int(_env("LRA_MCP_MAX_FILE_BYTES") or str(2 * 1024 * 1024)),
-        max_hint_chars=int(_env("LRA_MCP_MAX_HINT_CHARS") or "500"),
-        max_findings=int(_env("LRA_MCP_MAX_FINDINGS") or "200"),
-        max_prompt_chars=int(_env("LRA_MCP_MAX_PROMPT_CHARS") or "200000"),
+        max_files=_as_int("LRA_MCP_MAX_FILES", _env("LRA_MCP_MAX_FILES") or 5000),
+        max_file_bytes=_as_int("LRA_MCP_MAX_FILE_BYTES", _env("LRA_MCP_MAX_FILE_BYTES") or 2 * 1024 * 1024),
+        max_hint_chars=_as_int("LRA_MCP_MAX_HINT_CHARS", _env("LRA_MCP_MAX_HINT_CHARS") or 500),
+        max_findings=_as_int("LRA_MCP_MAX_FINDINGS", _env("LRA_MCP_MAX_FINDINGS") or 200),
+        max_prompt_chars=_as_int("LRA_MCP_MAX_PROMPT_CHARS", _env("LRA_MCP_MAX_PROMPT_CHARS") or 200000),
     )

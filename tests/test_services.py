@@ -23,7 +23,6 @@ def _cfg(tmp_path, **kw):
         lra_profile="mock",
         runs_dir=tmp_path / "runs",
         concurrency=2,
-        startup_timeout=30,
         total_timeout=1800,
         max_files=5000,
         max_file_bytes=2 * 1024 * 1024,

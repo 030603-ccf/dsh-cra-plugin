@@ -1,8 +1,9 @@
 """Error model for lra-code-review-mcp.
 
 Every business error is an :class:`LraMcpError` carrying a stable machine
-readable ``code``. The FastMCP layer turns it into an isError result whose
-text content is the JSON object from :meth:`LraMcpError.to_json`.
+readable ``code``. The hand-written JSON-RPC stdio server turns it into an
+``isError`` tool result whose text content is the JSON object from
+:meth:`LraMcpError.to_json`.
 """
 
 from __future__ import annotations

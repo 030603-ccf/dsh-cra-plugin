@@ -51,7 +51,8 @@ def run_review(cfg: McpConfig, root: str, run_id: str, options: ReviewOptions):
             "TIMEOUT",
             run_id=run_id,
             timeout=cfg.total_timeout,
-            partial=False,
+            partial=True,
+            resume=f"run 目录与 checkpoint 已保留，用相同 run_id={run_id} 重新调用即可续跑",
         ) from e
     except OSError as e:
         raise LraMcpError(

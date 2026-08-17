@@ -1,6 +1,6 @@
 # lra-code-review-mcp
 
-[lra-code-review](https://github.com/030603-ccf/code-review-agent)（基于 LangGraph 的代码审查智能体）的 MCP server。它把 lra-code-review 包装成只读工具，任何 MCP 客户端（Claude Desktop、Cursor、Windsurf……）都能通过 LLM 审查代码。
+[lra-code-review](https://github.com/030603-ccf/code-review-agent)（基于 LangGraph 的代码审查智能体）的 MCP server。它把 lra-code-review 包装成只读工具，任何 MCP 客户端都能通过 LLM 审查代码。
 
 通过 stdio 暴露 4 个只读工具：
 
@@ -66,7 +66,7 @@ profiles:
 三种方式设置这个变量：
 
 1. **Shell**（CLI）：`export DEEPSEEK_API_KEY=sk-...`
-2. **MCP 客户端的 `env` 块**（Claude Desktop / Cursor）：在 server 的 `env` 里加 `"DEEPSEEK_API_KEY": "sk-..."`
+2. **MCP 客户端的 `env` 块**：在 server 的 `env` 里加 `"DEEPSEEK_API_KEY": "sk-..."`
 3. **Docker**：`docker run -i --rm ... -e DEEPSEEK_API_KEY="$DEEPSEEK_API_KEY" ...`
 
 要求（继承自 lra）：
@@ -94,8 +94,6 @@ profiles:
 }
 ```
 
-- Claude Desktop：`claude_desktop_config.json`
-- Cursor：`.cursor/mcp.json`
 - 绝不要把真实 API key 写进这个文件——它来自 `api_key_env` 指定的环境变量。
 
 工具暴露在 `mcp__lra__*` 命名空间下（例如 `mcp__lra__review_project`）。
@@ -118,4 +116,5 @@ pytest tests -q
 ## 说明
 
 - 4 个工具都是只读的：server 从不修改被审查的项目。
+- 主循环是**串行**的：客户端并发调用会排队依次执行，而不是返回 BUSY 错误。一次全量审查本身较重，串行避免并发打爆模型 API。
 - 审查产物（`findings.json`、`report.md`、`summary.json`）落在 `LRA_MCP_RUNS_DIR/<run_id>/`。

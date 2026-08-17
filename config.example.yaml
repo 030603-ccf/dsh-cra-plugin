@@ -8,15 +8,17 @@
 default_profile: deepseek
 
 profiles:
-  # DeepSeek official
+  # DeepSeek official（对齐 lra 实测最优配置：v4-flash + 开思考）
   deepseek:
     base_url: "https://api.deepseek.com"
     api_key_env: "DEEPSEEK_API_KEY"   # <- set DEEPSEEK_API_KEY=sk-... in your env
-    model: "deepseek-chat"
+    model: "deepseek-v4-flash"
     temperature: 0.2
     max_tokens: 4096
     timeout: 60
     rpm: 60
+    # 开思考显著提升检出率；配合 lra 的 MAX_OUTPUT_TOKENS=16384
+    extra_body: {"thinking": {"type": "enabled"}}
 
   # Any OpenAI-compatible endpoint (OpenAI / Qwen / GLM / vLLM / Ollama …)
   openai_compatible:
