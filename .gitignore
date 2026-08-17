@@ -4,3 +4,8 @@ __pycache__/
 *.egg-info/
 test_output.log
 .venv/
+
+# DSH session artifacts (local only)
+.dsh-filess/
+smoke.log
+
